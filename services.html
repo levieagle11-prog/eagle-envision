@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Services · Eagle Envision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+.services-bento {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.2rem;
+}
+
+.s-card {
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.2rem 2rem 2.4rem;
+  position: relative; overflow: hidden;
+  transition: all .3s;
+}
+.s-card::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(to right, transparent, var(--blue-mid), transparent);
+  opacity: 0; transition: opacity .3s;
+}
+.s-card:hover { border-color: rgba(59,130,246,.32); transform: translateY(-5px); box-shadow: 0 22px 50px rgba(0,0,0,.5); }
+.s-card:hover::after { opacity: 1; }
+.s-card:hover .icon-box { box-shadow: 0 0 24px rgba(59,130,246,.35); }
+
+.s-card.tall { grid-row: span 2; }
+.s-card.wide { grid-column: span 2; }
+
+.s-num {
+  font-family: var(--font-mono); font-size: .68rem; letter-spacing: .14em;
+  color: var(--blue-bright); text-transform: uppercase; margin-bottom: 1.1rem;
+}
+.s-title { font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; margin-bottom: .65rem; }
+.s-desc  { font-size: .88rem; color: var(--muted); line-height: 1.72; }
+
+.s-big {
+  font-family: var(--font-head); font-weight: 800;
+  font-size: clamp(3.5rem,6vw,5rem);
+  background: linear-gradient(135deg, #3B82F6, #93C5FD);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1; margin: 1rem 0;
+}
+
+/* Process steps */
+.process { display: flex; flex-direction: column; gap: 1.1rem; margin-top: 1.4rem; }
+.p-step {
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.p-step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(59,130,246,.15); border: 1px solid rgba(59,130,246,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: .68rem; color: var(--blue-light);
+  flex-shrink: 0; margin-top: 2px;
+}
+.p-step-text strong { font-weight: 600; color: var(--white); display: block; margin-bottom: .15rem; }
+.p-step-text span   { font-size: .82rem; color: var(--muted); }
+
+@media (max-width:1024px) {
+  .services-bento { grid-template-columns: 1fr 1fr; }
+  .s-card.wide  { grid-column: span 2; }
+  .s-card.tall  { grid-row: span 1; }
+}
+@media (max-width:680px) {
+  .services-bento { grid-template-columns: 1fr; }
+  .s-card.wide  { grid-column: span 1; }
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="preloader"><p class="pre-logo">Eagle Envision</p></div>
+<canvas id="blob-canvas"></canvas>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html"    onclick="closeMenu()">Home</a>
+  <a href="build.html"    onclick="closeMenu()">What I Build</a>
+  <a href="services.html" onclick="closeMenu()">Services</a>
+  <a href="pricing.html"  onclick="closeMenu()">Pricing</a>
+  <a href="about.html"    onclick="closeMenu()">About</a>
+  <a href="contact.html"  onclick="closeMenu()">Contact</a>
+</div>
+
+<div id="main-content">
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="thelogo.png" alt="Eagle Envision Logo"/>
+      Eagle Envision
+    </a>
+    <ul class="nav-links">
+      <li><a href="build.html">What I Build</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="btn-nav">Start a project</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <div class="section-tag">Services</div>
+      <h1 class="section-title reveal">Built for<br>small business.</h1>
+      <p class="section-sub reveal">Three core services, one clear mission: make your business impossible to ignore online. Clean, fast, and built to last.</p>
+
+      <div class="services-bento">
+
+        <!-- Custom Websites — tall -->
+        <div class="s-card tall tilt-card reveal">
+          <div class="s-num">01</div>
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-light)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="s-title">Custom Websites</div>
+          <p class="s-desc">Hand-crafted pages built to load fast, look sharp, and turn visitors into customers. Every pixel is intentional.</p>
+          <div class="s-big">100%</div>
+          <p class="s-desc">Custom built — no templates, no page builders, no shortcuts. Your site is yours alone.</p>
+          <div class="badge" style="margin-top:1.5rem"><span class="dot"></span> HTML · CSS · JS only</div>
+        </div>
+
+        <!-- Brand Identity — wide -->
+        <div class="s-card wide tilt-card reveal">
+          <div class="s-num">02</div>
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-light)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3"/></svg>
+          </div>
+          <div class="s-title">Brand Identity</div>
+          <p class="s-desc">Logos, colors, and visual systems that make your business unmistakably yours. When customers see you, they know you. When they leave, they remember you.</p>
+        </div>
+
+        <!-- Local SEO -->
+        <div class="s-card tilt-card reveal">
+          <div class="s-num">03</div>
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-light)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <div class="s-title">Local SEO</div>
+          <p class="s-desc">Show up when neighbors search. Your site tuned so Roanoke & DFW find you first on Google.</p>
+        </div>
+
+        <!-- Maintenance — wide -->
+        <div class="s-card wide tilt-card reveal">
+          <div class="s-num">04</div>
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-light)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <div class="s-title">Ongoing Maintenance</div>
+          <p class="s-desc">Monthly updates, content swaps, and performance checks so your site stays sharp long after launch. Set it and never sweat it.</p>
+          <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.2rem;">
+            <div class="badge"><span class="dot"></span> Personal: $15/mo</div>
+            <div class="badge"><span class="dot"></span> Business: $30/mo</div>
+          </div>
+        </div>
+
+        <!-- Process — full width -->
+        <div class="s-card wide tilt-card reveal">
+          <div class="s-num">My Process</div>
+          <div class="s-title">How it works</div>
+          <div class="process">
+            <div class="p-step">
+              <div class="p-step-num">1</div>
+              <div class="p-step-text"><strong>Discovery Call</strong><span>We talk about your business, goals, and what you need. Free, no pressure.</span></div>
+            </div>
+            <div class="p-step">
+              <div class="p-step-num">2</div>
+              <div class="p-step-text"><strong>Quote & Plan</strong><span>I send a clear, itemized quote. No hidden fees, no surprises.</span></div>
+            </div>
+            <div class="p-step">
+              <div class="p-step-num">3</div>
+              <div class="p-step-text"><strong>Design & Build</strong><span>I build your site in weeks, keeping you updated every step of the way.</span></div>
+            </div>
+            <div class="p-step">
+              <div class="p-step-num">4</div>
+              <div class="p-step-text"><strong>Review & Launch</strong><span>You review, request tweaks, and we launch when you're happy. Simple.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fast turnaround -->
+        <div class="s-card tilt-card reveal">
+          <div class="s-num">Delivery</div>
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-light)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="s-title">Fast Turnaround</div>
+          <div class="s-big" style="font-size:clamp(2.5rem,5vw,4rem)">Weeks</div>
+          <p class="s-desc">Most sites delivered in 2–4 weeks. 1:1 directly with the founder — no middlemen, no confusion.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Eagle Envision</div>
+    <div class="footer-links">
+      <a href="pricing.html">Pricing</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 Eagle Envision Web Design · Roanoke, TX</div>
+  </footer>
+</div>
+<script src="main.js"></script>
+</body>
+</html>

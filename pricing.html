@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Pricing · Eagle Envision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+.pricing-header { text-align: center; max-width: 600px; margin: 0 auto 3.5rem; }
+.pricing-header .section-sub { margin: 0 auto; text-align: center; }
+
+/* ── Plans Grid ─────────────────────────────────── */
+.plans-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; max-width: 860px; margin: 0 auto 3rem;
+}
+
+.plan {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 24px; padding: 2.5rem;
+  position: relative; overflow: hidden;
+  transition: transform .3s, box-shadow .3s, border-color .3s;
+}
+.plan:hover { transform: translateY(-7px); box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+
+.plan.featured {
+  border-color: rgba(59,130,246,.4);
+  background: linear-gradient(145deg, rgba(26,68,204,.1), rgba(9,9,16,.6));
+}
+.plan.featured::before {
+  content: ''; position: absolute; inset: 0; border-radius: 24px;
+  box-shadow: inset 0 0 0 1px rgba(59,130,246,.28); pointer-events: none;
+}
+
+.plan-badge {
+  font-family: var(--font-mono); font-size: .66rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--blue-bright);
+  display: inline-block; margin-bottom: .9rem;
+}
+.plan-badge.hot {
+  background: rgba(59,130,246,.14); border: 1px solid rgba(59,130,246,.3);
+  padding: .24rem .7rem; border-radius: 50px; color: var(--blue-light);
+}
+
+.plan-name { font-family: var(--font-head); font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; }
+
+.plan-price { display: flex; align-items: flex-end; gap: .25rem; margin-bottom: .4rem; }
+.plan-price .dollar { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--blue-light); padding-bottom: .55rem; }
+.plan-price .amount {
+  font-family: var(--font-head); font-size: clamp(3rem,5vw,4rem); font-weight: 800; line-height: 1;
+  background: linear-gradient(135deg, #93C5FD, #BFDBFE);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.plan-note { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); margin-bottom: .3rem; }
+
+.maint-row {
+  display: flex; align-items: center; gap: .55rem;
+  font-size: .83rem; color: var(--muted);
+  padding: .65rem .95rem;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border); border-radius: 10px;
+  margin: 1.1rem 0;
+}
+.maint-row .mval { font-family: var(--font-head); font-weight: 700; color: var(--white); }
+.maint-row svg { opacity: .45; flex-shrink: 0; width:15px; height:15px; stroke: var(--blue-light); fill:none; stroke-width:1.4; stroke-linecap:round; }
+
+.divider { height: 1px; background: var(--border); margin: 1.4rem 0; }
+
+.feat-list { list-style: none; display: flex; flex-direction: column; gap: .7rem; margin-bottom: 2rem; }
+.feat-list li {
+  display: flex; align-items: flex-start; gap: .65rem;
+  font-size: .87rem; color: var(--muted); line-height: 1.5;
+}
+.feat-list li .chk {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: rgba(59,130,246,.16); border: 1px solid rgba(59,130,246,.32);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+  color: var(--blue-light); font-size: .6rem; font-weight: 700;
+}
+
+.btn-plan {
+  width: 100%; padding: 1rem;
+  font-family: var(--font-head); font-size: .88rem; font-weight: 700;
+  border-radius: 50px; cursor: none; text-decoration: none;
+  display: flex; align-items: center; justify-content: center; gap: .4rem;
+  transition: all .25s;
+}
+.btn-plan.outline {
+  background: transparent; border: 1px solid rgba(59,130,246,.35);
+  color: var(--blue-light);
+}
+.btn-plan.outline:hover { background: var(--blue-pale); border-color: var(--blue-bright); transform: translateY(-2px); }
+.btn-plan.solid {
+  background: var(--blue-mid); border: none; color: #fff;
+  box-shadow: 0 0 22px var(--blue-glow);
+}
+.btn-plan.solid:hover { background: var(--blue-bright); box-shadow: 0 0 36px rgba(59,130,246,.6); transform: translateY(-2px); }
+
+/* ── Comparison Table ───────────────────────────── */
+.compare-wrap {
+  max-width: 860px; margin: 0 auto;
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.compare-title {
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--blue-bright);
+  padding: 1.4rem 2rem 1rem; border-bottom: 1px solid var(--border);
+}
+.compare-table {
+  width: 100%; border-collapse: collapse;
+}
+.compare-table th, .compare-table td {
+  padding: .85rem 1.5rem; text-align: left;
+  border-bottom: 1px solid var(--border); font-size: .87rem;
+}
+.compare-table th {
+  font-family: var(--font-head); font-size: .82rem; font-weight: 700;
+  background: rgba(255,255,255,.02); color: var(--white);
+}
+.compare-table th:not(:first-child), .compare-table td:not(:first-child) { text-align: center; }
+.compare-table td:first-child { color: var(--muted); }
+.compare-table td:not(:first-child) { color: var(--blue-light); font-weight: 600; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: rgba(59,130,246,.04); }
+.check-y  { color: #22c55e !important; }
+.check-n  { color: rgba(238,242,255,.25) !important; font-weight: 400 !important; }
+
+/* addon note */
+.addon-note {
+  text-align: center; margin-top: 2rem;
+  font-family: var(--font-mono); font-size: .72rem;
+  color: var(--muted); letter-spacing: .05em;
+}
+
+@media (max-width:680px) {
+  .plans-grid { grid-template-columns: 1fr; }
+  .compare-table th, .compare-table td { padding: .7rem .9rem; font-size: .78rem; }
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="preloader"><p class="pre-logo">Eagle Envision</p></div>
+<canvas id="blob-canvas"></canvas>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html"    onclick="closeMenu()">Home</a>
+  <a href="build.html"    onclick="closeMenu()">What I Build</a>
+  <a href="services.html" onclick="closeMenu()">Services</a>
+  <a href="pricing.html"  onclick="closeMenu()">Pricing</a>
+  <a href="about.html"    onclick="closeMenu()">About</a>
+  <a href="contact.html"  onclick="closeMenu()">Contact</a>
+</div>
+
+<div id="main-content">
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="thelogo.png" alt="Eagle Envision Logo"/>
+      Eagle Envision
+    </a>
+    <ul class="nav-links">
+      <li><a href="build.html">What I Build</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="btn-nav">Start a project</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <div class="pricing-header">
+        <div class="section-tag" style="justify-content:center">Pricing</div>
+        <h1 class="section-title reveal">Honest pricing.<br>No surprises.</h1>
+        <p class="section-sub reveal">Flat rates, optional add-ons, and transparent maintenance fees. You'll always know exactly what you're paying for — before we start.</p>
+      </div>
+
+      <!-- Plans -->
+      <div class="plans-grid">
+
+        <!-- Personal -->
+        <div class="plan tilt-card reveal">
+          <span class="plan-badge">Personal</span>
+          <div class="plan-name">Personal Website</div>
+          <div class="plan-price">
+            <span class="dollar">$</span>
+            <span class="amount">85</span>
+          </div>
+          <p class="plan-note">One-time base price · Add-ons extra</p>
+          <div class="maint-row">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Optional maintenance:&nbsp;<span class="mval">$15 / mo</span>
+          </div>
+          <div class="divider"></div>
+          <ul class="feat-list">
+            <li><span class="chk">✓</span>Custom HTML / CSS / JS design</li>
+            <li><span class="chk">✓</span>Hero section + CTA</li>
+            <li><span class="chk">✓</span>About & FAQ sections</li>
+            <li><span class="chk">✓</span>Contact form (email delivery)</li>
+            <li><span class="chk">✓</span>Mobile responsive</li>
+            <li><span class="chk">✓</span>Basic local SEO setup</li>
+            <li><span class="chk">✓</span>1 round of revisions included</li>
+          </ul>
+          <a href="contact.html" class="btn-plan outline">Get started →</a>
+        </div>
+
+        <!-- Small Business -->
+        <div class="plan featured tilt-card reveal">
+          <span class="plan-badge hot">⭐ Most Popular</span>
+          <div class="plan-name">Small Business</div>
+          <div class="plan-price">
+            <span class="dollar">$</span>
+            <span class="amount">180</span>
+          </div>
+          <p class="plan-note">One-time base price · Add-ons extra</p>
+          <div class="maint-row">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Optional maintenance:&nbsp;<span class="mval">$30 / mo</span>
+          </div>
+          <div class="divider"></div>
+          <ul class="feat-list">
+            <li><span class="chk">✓</span>Everything in Personal</li>
+            <li><span class="chk">✓</span>Multi-page site (up to 5 pages)</li>
+            <li><span class="chk">✓</span>Brand identity integration</li>
+            <li><span class="chk">✓</span>Services / portfolio section</li>
+            <li><span class="chk">✓</span>Advanced local SEO</li>
+            <li><span class="chk">✓</span>Google Business setup guidance</li>
+            <li><span class="chk">✓</span>Priority 1:1 founder support</li>
+            <li><span class="chk">✓</span>2 rounds of revisions included</li>
+          </ul>
+          <a href="contact.html" class="btn-plan solid">Get started →</a>
+        </div>
+
+      </div>
+
+      <!-- Comparison table -->
+      <div class="compare-wrap reveal">
+        <div class="compare-title">Side-by-side comparison</div>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Personal — $85</th>
+              <th>Small Business — $180</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Custom HTML/CSS/JS build</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
+            <tr><td>Mobile responsive</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
+            <tr><td>Hero + CTA section</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
+            <tr><td>FAQ section</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
+            <tr><td>Contact form</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
+            <tr><td>Basic local SEO</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
+            <tr><td>Number of pages</td><td>1 page</td><td>Up to 5 pages</td></tr>
+            <tr><td>Brand identity integration</td><td class="check-n">—</td><td class="check-y">✓</td></tr>
+            <tr><td>Services / portfolio section</td><td class="check-n">—</td><td class="check-y">✓</td></tr>
+            <tr><td>Advanced local SEO</td><td class="check-n">—</td><td class="check-y">✓</td></tr>
+            <tr><td>Google Business guidance</td><td class="check-n">—</td><td class="check-y">✓</td></tr>
+            <tr><td>Revision rounds included</td><td>1 round</td><td>2 rounds</td></tr>
+            <tr><td>Optional monthly maintenance</td><td>$15/mo</td><td>$30/mo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="addon-note reveal" style="margin-top:2rem">
+        Add-ons (logo design, extra animations, extra pages, etc.) are priced separately.
+        <a href="contact.html" style="color:var(--blue-light);text-decoration:none"> Ask for a custom quote →</a>
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Eagle Envision</div>
+    <div class="footer-links">
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 Eagle Envision Web Design · Roanoke, TX</div>
+  </footer>
+</div>
+<script src="main.js"></script>
+</body>
+</html>
