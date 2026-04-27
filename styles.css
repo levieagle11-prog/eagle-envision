@@ -90,7 +90,7 @@ nav.scrolled { background: rgba(9,9,16,.92); }
 }
 .nav-logo img {
   width: 34px; height: 34px; object-fit: contain;
-  mix-blend-mode: multiply;
+  mix-blend-mode: screen;
   filter: invert(1) sepia(1) saturate(3) hue-rotate(195deg) brightness(1.2);
   transition: filter .3s;
 }
