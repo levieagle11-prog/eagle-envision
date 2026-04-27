@@ -9,143 +9,279 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css"/>
 <style>
-.pricing-header { text-align: center; max-width: 600px; margin: 0 auto 3.5rem; }
-.pricing-header .section-sub { margin: 0 auto; text-align: center; }
 
-/* ── Plans Grid ─────────────────────────────────── */
-.plans-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1.5rem; max-width: 860px; margin: 0 auto 3rem;
+/* ─── HERO ─────────────────────────────────────── */
+.pricing-hero {
+  padding: 9rem 2.5rem 5rem;
+  text-align: center; position: relative;
+}
+.pricing-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 65% 50% at 50% 0%, rgba(37,99,235,.14), transparent 70%);
+  pointer-events: none;
 }
 
-.plan {
-  background: var(--glass);
-  backdrop-filter: blur(16px);
-  border: 1px solid var(--border);
-  border-radius: 24px; padding: 2.5rem;
-  position: relative; overflow: hidden;
-  transition: transform .3s, box-shadow .3s, border-color .3s;
+.hero-eyebrow {
+  font-family: var(--font-mono); font-size: .72rem;
+  letter-spacing: .22em; color: var(--blue-bright);
+  text-transform: uppercase; margin-bottom: 1.4rem;
+  display: inline-flex; align-items: center; gap: .6rem;
 }
-.plan:hover { transform: translateY(-7px); box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+.hero-eyebrow .pulse {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--blue-bright); box-shadow: 0 0 8px var(--blue-bright);
+  animation: pulseAnim 2s ease-in-out infinite;
+}
+@keyframes pulseAnim { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.5;transform:scale(.72);} }
 
-.plan.featured {
-  border-color: rgba(59,130,246,.4);
-  background: linear-gradient(145deg, rgba(26,68,204,.1), rgba(9,9,16,.6));
+.hero-h1 {
+  font-family: var(--font-head);
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  font-weight: 800; line-height: 1.06; letter-spacing: -.03em;
+  margin: 0 auto 1.3rem; max-width: 820px;
 }
-.plan.featured::before {
-  content: ''; position: absolute; inset: 0; border-radius: 24px;
-  box-shadow: inset 0 0 0 1px rgba(59,130,246,.28); pointer-events: none;
-}
-
-.plan-badge {
-  font-family: var(--font-mono); font-size: .66rem; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--blue-bright);
-  display: inline-block; margin-bottom: .9rem;
-}
-.plan-badge.hot {
-  background: rgba(59,130,246,.14); border: 1px solid rgba(59,130,246,.3);
-  padding: .24rem .7rem; border-radius: 50px; color: var(--blue-light);
-}
-
-.plan-name { font-family: var(--font-head); font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; }
-
-.plan-price { display: flex; align-items: flex-end; gap: .25rem; margin-bottom: .4rem; }
-.plan-price .dollar { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--blue-light); padding-bottom: .55rem; }
-.plan-price .amount {
-  font-family: var(--font-head); font-size: clamp(3rem,5vw,4rem); font-weight: 800; line-height: 1;
-  background: linear-gradient(135deg, #93C5FD, #BFDBFE);
+.hero-h1 .grad {
+  background: linear-gradient(120deg, #60A5FA 10%, #93C5FD 50%, #BFDBFE 90%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-.plan-note { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); margin-bottom: .3rem; }
-
-.maint-row {
-  display: flex; align-items: center; gap: .55rem;
-  font-size: .83rem; color: var(--muted);
-  padding: .65rem .95rem;
-  background: rgba(255,255,255,.03);
-  border: 1px solid var(--border); border-radius: 10px;
-  margin: 1.1rem 0;
+.hero-sub {
+  font-size: clamp(.95rem,1.5vw,1.1rem); color: var(--muted);
+  max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.8;
 }
-.maint-row .mval { font-family: var(--font-head); font-weight: 700; color: var(--white); }
-.maint-row svg { opacity: .45; flex-shrink: 0; width:15px; height:15px; stroke: var(--blue-light); fill:none; stroke-width:1.4; stroke-linecap:round; }
 
-.divider { height: 1px; background: var(--border); margin: 1.4rem 0; }
-
-.feat-list { list-style: none; display: flex; flex-direction: column; gap: .7rem; margin-bottom: 2rem; }
-.feat-list li {
-  display: flex; align-items: flex-start; gap: .65rem;
-  font-size: .87rem; color: var(--muted); line-height: 1.5;
-}
-.feat-list li .chk {
-  width: 18px; height: 18px; border-radius: 50%;
-  background: rgba(59,130,246,.16); border: 1px solid rgba(59,130,246,.32);
+.hero-trust {
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px;
-  color: var(--blue-light); font-size: .6rem; font-weight: 700;
+  gap: 2rem; flex-wrap: wrap;
+}
+.trust-item {
+  display: flex; align-items: center; gap: .5rem;
+  font-family: var(--font-mono); font-size: .7rem;
+  letter-spacing: .08em; color: var(--muted); text-transform: uppercase;
+}
+.trust-item svg { width:14px;height:14px;stroke:var(--blue-light);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0; }
+
+/* ─── PLANS ─────────────────────────────────────── */
+.plans-section { padding: 0 2.5rem 5rem; }
+.plans-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; max-width: 900px; margin: 0 auto;
 }
 
+.plan-card {
+  background: var(--glass); backdrop-filter: blur(18px);
+  border: 1px solid var(--border); border-radius: 24px;
+  padding: 2.6rem 2.4rem; position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, border-color .3s;
+}
+.plan-card:hover { transform: translateY(-8px); box-shadow: 0 32px 64px rgba(0,0,0,.55); }
+.plan-card.featured {
+  border-color: rgba(59,130,246,.38);
+  background: linear-gradient(145deg, rgba(26,68,204,.12), rgba(9,9,16,.65));
+}
+.plan-card.featured::before {
+  content:''; position:absolute; inset:0; border-radius:24px;
+  box-shadow: inset 0 0 0 1px rgba(59,130,246,.25), 0 0 60px rgba(59,130,246,.08);
+  pointer-events:none;
+}
+.plan-card.featured:hover { box-shadow: 0 32px 64px rgba(0,0,0,.55), 0 0 40px rgba(59,130,246,.12); }
+
+.plan-ribbon {
+  position: absolute; top: 1.4rem; right: 1.4rem;
+  font-family: var(--font-mono); font-size: .62rem; letter-spacing: .12em;
+  padding: .28rem .75rem; border-radius: 50px; text-transform: uppercase;
+  background: rgba(59,130,246,.18); border: 1px solid rgba(59,130,246,.38); color: var(--blue-light);
+}
+
+.plan-type { font-family:var(--font-mono);font-size:.68rem;letter-spacing:.16em;color:var(--blue-bright);text-transform:uppercase;margin-bottom:.7rem; }
+.plan-name { font-family:var(--font-head);font-size:1.6rem;font-weight:800;margin-bottom:.4rem; }
+.plan-tagline { font-size:.88rem;color:var(--muted);margin-bottom:1.8rem;line-height:1.55; }
+
+.plan-price-row { display:flex;align-items:flex-end;gap:.2rem;margin-bottom:.3rem; }
+.price-dollar { font-family:var(--font-head);font-size:1.5rem;font-weight:700;color:var(--blue-light);padding-bottom:.5rem; }
+.price-amount {
+  font-family:var(--font-head);font-size:clamp(3.2rem,5.5vw,4.2rem);font-weight:800;line-height:1;
+  background:linear-gradient(135deg,#93C5FD,#BFDBFE);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.price-note { font-family:var(--font-mono);font-size:.68rem;color:var(--muted);margin-bottom:1.6rem;letter-spacing:.04em; }
+
+.plan-divider { height:1px;background:var(--border);margin:1.4rem 0; }
+
+.checklist-label { font-family:var(--font-mono);font-size:.65rem;letter-spacing:.14em;color:var(--blue-bright);text-transform:uppercase;margin-bottom:.9rem; }
+.checklist { list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.8rem; }
+.checklist li { display:flex;align-items:flex-start;gap:.75rem;font-size:.87rem;line-height:1.5; }
+.checklist li .ck { width:19px;height:19px;border-radius:50%;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800; }
+.ck-yes  { background:rgba(34,197,94,.14);border:1px solid rgba(34,197,94,.35);color:#4ade80; }
+.ck-star { background:rgba(59,130,246,.18);border:1px solid rgba(59,130,246,.38);color:var(--blue-light); }
+.checklist li .li-text { color:var(--muted); }
+.checklist li .li-text strong { color:var(--white);font-weight:600;display:block; }
+
+.maint-pill {
+  display:flex;align-items:center;gap:.6rem;padding:.7rem 1rem;
+  background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:11px;
+  font-size:.83rem;color:var(--muted);margin-bottom:1.8rem;
+}
+.maint-pill svg { width:14px;height:14px;stroke:var(--blue-light);fill:none;stroke-width:1.5;stroke-linecap:round;flex-shrink:0; }
+.maint-pill .mv { font-family:var(--font-head);font-weight:700;color:var(--white); }
+
+.plan-cta { margin-top: auto; }
 .btn-plan {
-  width: 100%; padding: 1rem;
-  font-family: var(--font-head); font-size: .88rem; font-weight: 700;
-  border-radius: 50px; cursor: none; text-decoration: none;
-  display: flex; align-items: center; justify-content: center; gap: .4rem;
-  transition: all .25s;
+  width:100%;padding:1rem;font-family:var(--font-head);font-size:.92rem;font-weight:700;
+  border-radius:50px;cursor:none;text-decoration:none;letter-spacing:.03em;
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+  transition:all .28s cubic-bezier(.22,1,.36,1);border:none;
 }
-.btn-plan.outline {
-  background: transparent; border: 1px solid rgba(59,130,246,.35);
-  color: var(--blue-light);
-}
-.btn-plan.outline:hover { background: var(--blue-pale); border-color: var(--blue-bright); transform: translateY(-2px); }
-.btn-plan.solid {
-  background: var(--blue-mid); border: none; color: #fff;
-  box-shadow: 0 0 22px var(--blue-glow);
-}
-.btn-plan.solid:hover { background: var(--blue-bright); box-shadow: 0 0 36px rgba(59,130,246,.6); transform: translateY(-2px); }
+.btn-plan.outline { background:transparent;border:1px solid rgba(59,130,246,.35);color:var(--blue-light); }
+.btn-plan.outline:hover { background:var(--blue-pale);border-color:var(--blue-bright);transform:translateY(-2px);box-shadow:0 0 20px rgba(59,130,246,.15); }
+.btn-plan.solid { background:var(--blue-mid);color:#fff;box-shadow:0 0 22px var(--blue-glow),0 4px 15px rgba(37,99,235,.35); }
+.btn-plan.solid:hover { background:var(--blue-bright);box-shadow:0 0 38px rgba(59,130,246,.65),0 6px 20px rgba(59,130,246,.4);transform:translateY(-2px); }
 
-/* ── Comparison Table ───────────────────────────── */
+/* ─── ADD-ONS ────────────────────────────────────── */
+.addons-section { padding: 0 2.5rem 5rem; }
+.addons-header { text-align:center;max-width:580px;margin:0 auto 3rem; }
+.addons-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1rem; max-width: 1000px; margin: 0 auto;
+}
+
+.addon-card {
+  background:var(--glass);backdrop-filter:blur(12px);
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.6rem 1.5rem;display:flex;flex-direction:column;gap:.6rem;
+  transition:border-color .3s,transform .28s,box-shadow .3s;
+  position:relative;overflow:hidden;
+}
+.addon-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(to right,transparent,var(--blue-bright),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.addon-card:hover { border-color:rgba(59,130,246,.32);transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.42); }
+.addon-card:hover::before { opacity:1; }
+
+.addon-icon {
+  width:40px;height:40px;border-radius:11px;
+  background:var(--blue-pale);border:1px solid rgba(59,130,246,.2);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 10px rgba(59,130,246,.1);
+}
+.addon-icon svg { width:18px;height:18px;stroke:var(--blue-light);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round; }
+.addon-name  { font-family:var(--font-head);font-size:1rem;font-weight:700; }
+.addon-desc  { font-size:.82rem;color:var(--muted);line-height:1.6;flex:1; }
+.addon-price {
+  font-family:var(--font-head);font-size:1.3rem;font-weight:800;margin-top:.3rem;
+  background:linear-gradient(135deg,#60A5FA,#93C5FD);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.addon-freq { font-family:var(--font-mono);font-size:.72rem;color:var(--muted);-webkit-text-fill-color:var(--muted); }
+
+/* ─── COMPARISON ─────────────────────────────────── */
+.compare-section { padding: 0 2.5rem 5rem; }
+.compare-header  { text-align:center;max-width:580px;margin:0 auto 3rem; }
+
 .compare-wrap {
-  max-width: 860px; margin: 0 auto;
-  background: var(--glass);
-  backdrop-filter: blur(14px);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
+  max-width:900px;margin:0 auto;
+  background:var(--glass);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:24px;overflow:hidden;
 }
-.compare-title {
-  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--blue-bright);
-  padding: 1.4rem 2rem 1rem; border-bottom: 1px solid var(--border);
-}
-.compare-table {
-  width: 100%; border-collapse: collapse;
-}
-.compare-table th, .compare-table td {
-  padding: .85rem 1.5rem; text-align: left;
-  border-bottom: 1px solid var(--border); font-size: .87rem;
-}
+.compare-table { width:100%;border-collapse:collapse; }
+.compare-table thead tr { background:rgba(37,99,235,.08);border-bottom:1px solid rgba(59,130,246,.18); }
 .compare-table th {
-  font-family: var(--font-head); font-size: .82rem; font-weight: 700;
-  background: rgba(255,255,255,.02); color: var(--white);
+  padding:1.2rem 1.5rem;text-align:left;
+  font-family:var(--font-head);font-size:.88rem;font-weight:700;color:var(--white);
 }
-.compare-table th:not(:first-child), .compare-table td:not(:first-child) { text-align: center; }
-.compare-table td:first-child { color: var(--muted); }
-.compare-table td:not(:first-child) { color: var(--blue-light); font-weight: 600; }
-.compare-table tr:last-child td { border-bottom: none; }
-.compare-table tr:hover td { background: rgba(59,130,246,.04); }
-.check-y  { color: #22c55e !important; }
-.check-n  { color: rgba(238,242,255,.25) !important; font-weight: 400 !important; }
+.compare-table th:not(:first-child) { text-align:center; }
+.compare-table th.col-lbl { font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:400; }
+.compare-table td { padding:.85rem 1.5rem;font-size:.87rem;border-bottom:1px solid var(--border);vertical-align:middle; }
+.compare-table td:first-child { color:var(--muted); }
+.compare-table td:not(:first-child) { text-align:center;font-weight:600; }
+.compare-table tr.cat-row td {
+  font-family:var(--font-mono);font-size:.64rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue-bright);
+  background:rgba(59,130,246,.05);border-bottom:1px solid rgba(59,130,246,.1);
+  padding:.6rem 1.5rem;
+}
+.compare-table tr:last-child td { border-bottom:none; }
+.compare-table tr:not(.cat-row):hover td { background:rgba(59,130,246,.03); }
+.val-yes  { color:#4ade80 !important; }
+.val-no   { color:rgba(238,242,255,.2) !important;font-weight:400 !important; }
+.val-blue { color:var(--blue-light) !important; }
+.val-muted{ color:var(--muted) !important;font-weight:400 !important; }
 
-/* addon note */
-.addon-note {
-  text-align: center; margin-top: 2rem;
-  font-family: var(--font-mono); font-size: .72rem;
-  color: var(--muted); letter-spacing: .05em;
+/* ─── MAINTENANCE ────────────────────────────────── */
+.maint-section { padding: 0 2.5rem 5rem; }
+.maint-inner {
+  max-width:900px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
 }
 
+.maint-card {
+  background:var(--glass);backdrop-filter:blur(14px);
+  border:1px solid var(--border);border-radius:24px;padding:2.4rem;
+  transition:border-color .3s,transform .3s;
+}
+.maint-card:hover { border-color:rgba(59,130,246,.28);transform:translateY(-5px); }
+.maint-card.peace { border-color:rgba(59,130,246,.3);background:linear-gradient(145deg,rgba(26,68,204,.1),rgba(9,9,16,.6)); }
+
+.maint-tag { font-family:var(--font-mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-bright);margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem; }
+.maint-tag .tdot { width:6px;height:6px;border-radius:50%;background:var(--blue-bright);box-shadow:0 0 6px var(--blue-bright); }
+.maint-title { font-family:var(--font-head);font-size:1.4rem;font-weight:800;margin-bottom:.6rem; }
+.maint-desc  { font-size:.88rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem; }
+
+.onetime-prices { display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.6rem; }
+.price-tier {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.8rem 1rem;background:rgba(255,255,255,.03);
+  border:1px solid var(--border);border-radius:10px;
+}
+.tier-name  { font-size:.88rem;color:var(--white);font-weight:500; }
+.tier-price { font-family:var(--font-head);font-size:1.1rem;font-weight:800;color:var(--blue-light); }
+
+.peace-prices { display:flex;gap:1.8rem;flex-wrap:wrap;margin-bottom:1.5rem; }
+.peace-prices > div { }
+.pp-label { font-family:var(--font-mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem; }
+.pp-row   { display:flex;align-items:flex-end;gap:.2rem; }
+.pp-dollar{ font-family:var(--font-head);font-size:1rem;font-weight:700;color:var(--blue-light);padding-bottom:.35rem; }
+.pp-amount{ font-family:var(--font-head);font-size:2.4rem;font-weight:800;line-height:1;background:linear-gradient(135deg,#93C5FD,#BFDBFE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.pp-freq  { font-family:var(--font-mono);font-size:.7rem;color:var(--muted);padding-bottom:.4rem; }
+
+.maint-list { list-style:none;display:flex;flex-direction:column;gap:.6rem; }
+.maint-list li { display:flex;align-items:center;gap:.65rem;font-size:.86rem;color:var(--muted); }
+.maint-list li svg { width:14px;height:14px;stroke:#4ade80;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0; }
+
+/* ─── BOTTOM CTA STRIP ───────────────────────────── */
+.cta-strip { padding: 0 2.5rem 6rem; }
+.cta-inner {
+  max-width:900px;margin:0 auto;
+  background:linear-gradient(135deg,rgba(26,68,204,.18),rgba(9,9,16,.7));
+  border:1px solid rgba(59,130,246,.3);border-radius:24px;
+  padding:3.5rem;text-align:center;position:relative;overflow:hidden;
+}
+.cta-inner::before {
+  content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);
+  width:500px;height:300px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(59,130,246,.09),transparent 70%);pointer-events:none;
+}
+.cta-inner h2 { font-family:var(--font-head);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;margin-bottom:.9rem; }
+.cta-inner p  { color:var(--muted);max-width:480px;margin:0 auto 2rem;line-height:1.75;font-size:.97rem; }
+.cta-btns { display:flex;gap:1rem;justify-content:center;flex-wrap:wrap; }
+
+/* ─── RESPONSIVE ─────────────────────────────────── */
+@media (max-width:900px) {
+  .addons-grid { grid-template-columns:1fr 1fr; }
+  .maint-inner { grid-template-columns:1fr; }
+}
 @media (max-width:680px) {
-  .plans-grid { grid-template-columns: 1fr; }
-  .compare-table th, .compare-table td { padding: .7rem .9rem; font-size: .78rem; }
+  .pricing-hero { padding:8rem 1.4rem 4rem; }
+  .plans-section,.addons-section,.compare-section,.maint-section,.cta-strip { padding-left:1.4rem;padding-right:1.4rem; }
+  .plans-grid  { grid-template-columns:1fr; }
+  .addons-grid { grid-template-columns:1fr; }
+  .compare-table th,.compare-table td { padding:.7rem .9rem;font-size:.78rem; }
+  .hero-trust  { gap:1rem; }
+  .cta-inner   { padding:2.4rem 1.5rem; }
+  .cta-btns    { flex-direction:column;align-items:center; }
 }
 </style>
 </head>
@@ -181,112 +317,277 @@
     <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
 
-  <div class="page">
-    <div class="container">
-      <div class="pricing-header">
-        <div class="section-tag" style="justify-content:center">Pricing</div>
-        <h1 class="section-title reveal">Honest pricing.<br>No surprises.</h1>
-        <p class="section-sub reveal">Flat rates, optional add-ons, and transparent maintenance fees. You'll always know exactly what you're paying for — before we start.</p>
+  <!-- ══ HERO ═══════════════════════════════════════ -->
+  <div class="pricing-hero">
+    <div class="hero-eyebrow"><span class="pulse"></span> Transparent Pricing</div>
+    <h1 class="hero-h1">Professional Web Presence.<br><span class="grad">AI-Powered Speed.</span></h1>
+    <p class="hero-sub">Custom-coded, high-performance websites starting at a fraction of agency costs. You own the code. No subscriptions. No surprises.</p>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        100% Code Ownership
       </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        90+ PageSpeed Score
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Delivered in Weeks
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        1:1 With the Founder
+      </div>
+    </div>
+  </div>
 
-      <!-- Plans -->
-      <div class="plans-grid">
+  <!-- ══ PLANS ═══════════════════════════════════════ -->
+  <div class="plans-section">
+    <div class="plans-grid">
 
-        <!-- Personal -->
-        <div class="plan tilt-card reveal">
-          <span class="plan-badge">Personal</span>
-          <div class="plan-name">Personal Website</div>
-          <div class="plan-price">
-            <span class="dollar">$</span>
-            <span class="amount">85</span>
-          </div>
-          <p class="plan-note">One-time base price · Add-ons extra</p>
-          <div class="maint-row">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Optional maintenance:&nbsp;<span class="mval">$15 / mo</span>
-          </div>
-          <div class="divider"></div>
-          <ul class="feat-list">
-            <li><span class="chk">✓</span>Custom HTML / CSS / JS design</li>
-            <li><span class="chk">✓</span>Hero section + CTA</li>
-            <li><span class="chk">✓</span>About & FAQ sections</li>
-            <li><span class="chk">✓</span>Contact form (email delivery)</li>
-            <li><span class="chk">✓</span>Mobile responsive</li>
-            <li><span class="chk">✓</span>Basic local SEO setup</li>
-            <li><span class="chk">✓</span>1 round of revisions included</li>
-          </ul>
-          <a href="contact.html" class="btn-plan outline">Get started →</a>
+      <!-- Personal -->
+      <div class="plan-card tilt-card reveal">
+        <div class="plan-type">Personal</div>
+        <div class="plan-name">Personal Website</div>
+        <p class="plan-tagline">Perfect for portfolios, resumes, or single-page landing pages.</p>
+        <div class="plan-price-row"><span class="price-dollar">$</span><span class="price-amount">85</span></div>
+        <p class="price-note">One-time build price · Add-ons à la carte</p>
+        <div class="plan-divider"></div>
+        <div class="checklist-label">What's included</div>
+        <ul class="checklist">
+          <li><span class="ck ck-star">★</span><span class="li-text"><strong>100% Code Ownership — No Monthly Platform Fees</strong>Your files, your server, yours forever.</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Custom HTML / CSS / JavaScript build</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Hero section + call-to-action</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">About & FAQ sections</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Contact form — delivers to your inbox</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Fully mobile responsive</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Basic local SEO foundation</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Deployed on Vercel Edge Network</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">1 round of revisions included</span></li>
+        </ul>
+        <div class="maint-pill">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Optional maintenance: <span class="mv">&nbsp;$15 / mo</span>
         </div>
-
-        <!-- Small Business -->
-        <div class="plan featured tilt-card reveal">
-          <span class="plan-badge hot">⭐ Most Popular</span>
-          <div class="plan-name">Small Business</div>
-          <div class="plan-price">
-            <span class="dollar">$</span>
-            <span class="amount">180</span>
-          </div>
-          <p class="plan-note">One-time base price · Add-ons extra</p>
-          <div class="maint-row">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Optional maintenance:&nbsp;<span class="mval">$30 / mo</span>
-          </div>
-          <div class="divider"></div>
-          <ul class="feat-list">
-            <li><span class="chk">✓</span>Everything in Personal</li>
-            <li><span class="chk">✓</span>Multi-page site (up to 5 pages)</li>
-            <li><span class="chk">✓</span>Brand identity integration</li>
-            <li><span class="chk">✓</span>Services / portfolio section</li>
-            <li><span class="chk">✓</span>Advanced local SEO</li>
-            <li><span class="chk">✓</span>Google Business setup guidance</li>
-            <li><span class="chk">✓</span>Priority 1:1 founder support</li>
-            <li><span class="chk">✓</span>2 rounds of revisions included</li>
-          </ul>
-          <a href="contact.html" class="btn-plan solid">Get started →</a>
+        <div class="plan-cta">
+          <a href="contact.html" class="btn-plan outline">
+            Get started
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
         </div>
-
       </div>
 
-      <!-- Comparison table -->
-      <div class="compare-wrap reveal">
-        <div class="compare-title">Side-by-side comparison</div>
-        <table class="compare-table">
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Personal — $85</th>
-              <th>Small Business — $180</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Custom HTML/CSS/JS build</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
-            <tr><td>Mobile responsive</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
-            <tr><td>Hero + CTA section</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
-            <tr><td>FAQ section</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
-            <tr><td>Contact form</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
-            <tr><td>Basic local SEO</td><td class="check-y">✓</td><td class="check-y">✓</td></tr>
-            <tr><td>Number of pages</td><td>1 page</td><td>Up to 5 pages</td></tr>
-            <tr><td>Brand identity integration</td><td class="check-n">—</td><td class="check-y">✓</td></tr>
-            <tr><td>Services / portfolio section</td><td class="check-n">—</td><td class="check-y">✓</td></tr>
-            <tr><td>Advanced local SEO</td><td class="check-n">—</td><td class="check-y">✓</td></tr>
-            <tr><td>Google Business guidance</td><td class="check-n">—</td><td class="check-y">✓</td></tr>
-            <tr><td>Revision rounds included</td><td>1 round</td><td>2 rounds</td></tr>
-            <tr><td>Optional monthly maintenance</td><td>$15/mo</td><td>$30/mo</td></tr>
-          </tbody>
-        </table>
+      <!-- Small Business -->
+      <div class="plan-card featured tilt-card reveal">
+        <div class="plan-ribbon">⭐ Most Popular</div>
+        <div class="plan-type">Small Business</div>
+        <div class="plan-name">Business Website</div>
+        <p class="plan-tagline">A complete digital foundation for local businesses and startups.</p>
+        <div class="plan-price-row"><span class="price-dollar">$</span><span class="price-amount">180</span></div>
+        <p class="price-note">One-time build price · Add-ons à la carte</p>
+        <div class="plan-divider"></div>
+        <div class="checklist-label">What's included</div>
+        <ul class="checklist">
+          <li><span class="ck ck-star">★</span><span class="li-text"><strong>100% Code Ownership — No Monthly Platform Fees</strong>Your files, your server, yours forever.</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Everything in Personal</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Multi-page site — up to 5 pages</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Brand identity integration</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Services / portfolio showcase section</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Advanced local SEO + meta setup</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Google Business setup guidance</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Deployed on Vercel Edge Network</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">90+ PageSpeed Insights target</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">Priority 1:1 founder support</span></li>
+          <li><span class="ck ck-yes">✓</span><span class="li-text">2 rounds of revisions included</span></li>
+        </ul>
+        <div class="maint-pill">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Optional maintenance: <span class="mv">&nbsp;$30 / mo</span>
+        </div>
+        <div class="plan-cta">
+          <a href="contact.html" class="btn-plan solid">
+            Get started
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+        </div>
       </div>
 
-      <p class="addon-note reveal" style="margin-top:2rem">
-        Add-ons (logo design, extra animations, extra pages, etc.) are priced separately.
-        <a href="contact.html" style="color:var(--blue-light);text-decoration:none"> Ask for a custom quote →</a>
-      </p>
+    </div>
+  </div>
+
+  <!-- ══ ADD-ONS ════════════════════════════════════ -->
+  <div class="addons-section">
+    <div class="addons-header">
+      <div class="section-tag" style="justify-content:center">Power-Ups</div>
+      <h2 class="section-title reveal">Customize your build.</h2>
+      <p class="section-sub reveal" style="text-align:center;margin-inline:auto;">Add exactly what you need, nothing you don't. All power-ups bolt onto either base package.</p>
+    </div>
+    <div class="addons-grid">
+
+      <div class="addon-card tilt-card reveal">
+        <div class="addon-icon"><svg viewBox="0 0 24 24"><path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2z"/><path d="M7 7h.01"/></svg></div>
+        <div class="addon-name">Additional Pages</div>
+        <p class="addon-desc">Need more than 5 pages? Each extra page is priced individually — same quality, same hand-coded build.</p>
+        <div class="addon-price">$50 <span class="addon-freq">/ page</span></div>
+      </div>
+
+      <div class="addon-card tilt-card reveal">
+        <div class="addon-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="addon-name">Legal Suite</div>
+        <p class="addon-desc">Privacy Policy + Terms of Service pages, professionally drafted and integrated into your site.</p>
+        <div class="addon-price">$75 <span class="addon-freq">flat</span></div>
+      </div>
+
+      <div class="addon-card tilt-card reveal">
+        <div class="addon-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+        <div class="addon-name">Multilingual Support</div>
+        <p class="addon-desc">Full site translation into a second language — copy, navigation, and SEO meta all localized.</p>
+        <div class="addon-price">$150 <span class="addon-freq">/ language</span></div>
+      </div>
+
+      <div class="addon-card tilt-card reveal">
+        <div class="addon-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <div class="addon-name">Booking Integration</div>
+        <p class="addon-desc">Calendly or TidyCal embedded and styled to match your brand. Clients book, you get the notification.</p>
+        <div class="addon-price">$80 <span class="addon-freq">flat</span></div>
+      </div>
+
+      <div class="addon-card tilt-card reveal">
+        <div class="addon-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+        <div class="addon-name">Advanced Local SEO Pack</div>
+        <p class="addon-desc">Schema Markup + Google Business Optimization + Search Console Submission. Dominate local search.</p>
+        <div class="addon-price">$100 <span class="addon-freq">flat</span></div>
+      </div>
+
+      <div class="addon-card reveal" style="border-style:dashed;border-color:rgba(59,130,246,.2);background:rgba(59,130,246,.03);display:flex;align-items:center;justify-content:center;text-align:center;">
+        <div>
+          <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:.4rem;">Need something custom?</div>
+          <p style="font-size:.83rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;">Logo design, animations, email setup — just ask and I'll quote it.</p>
+          <a href="contact.html" style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;color:var(--blue-light);text-decoration:none;text-transform:uppercase;">Request a quote →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ COMPARISON ═════════════════════════════════ -->
+  <div class="compare-section">
+    <div class="compare-header">
+      <div class="section-tag" style="justify-content:center">Compare</div>
+      <h2 class="section-title reveal">Side by side.</h2>
+      <p class="section-sub reveal" style="text-align:center;margin-inline:auto;">Every detail at a glance — pick with confidence.</p>
+    </div>
+    <div class="compare-wrap reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="col-lbl">Feature</th>
+            <th>Personal<br><span style="font-family:var(--font-mono);font-size:.68rem;font-weight:400;color:var(--muted);">$85 one-time</span></th>
+            <th>Small Business<br><span style="font-family:var(--font-mono);font-size:.68rem;font-weight:400;color:var(--blue-light);">$180 one-time</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="cat-row"><td colspan="3">Build Quality</td></tr>
+          <tr><td>Custom HTML / CSS / JS (no templates)</td><td class="val-yes">✓</td><td class="val-yes">✓</td></tr>
+          <tr><td>100% Code Ownership</td><td class="val-yes">✓</td><td class="val-yes">✓</td></tr>
+          <tr><td>Mobile Responsive</td><td class="val-yes">✓</td><td class="val-yes">✓</td></tr>
+          <tr><td>Performance Score</td><td class="val-blue">90+ target</td><td class="val-blue">90+ target</td></tr>
+          <tr><td>Hosting</td><td class="val-blue">Vercel Edge</td><td class="val-blue">Vercel Edge</td></tr>
+
+          <tr class="cat-row"><td colspan="3">Content &amp; Pages</td></tr>
+          <tr><td>Number of pages</td><td class="val-muted">1 page</td><td class="val-blue">Up to 5 pages</td></tr>
+          <tr><td>Hero section + CTA</td><td class="val-yes">✓</td><td class="val-yes">✓</td></tr>
+          <tr><td>About &amp; FAQ sections</td><td class="val-yes">✓</td><td class="val-yes">✓</td></tr>
+          <tr><td>Services / portfolio section</td><td class="val-no">—</td><td class="val-yes">✓</td></tr>
+          <tr><td>Brand identity integration</td><td class="val-no">—</td><td class="val-yes">✓</td></tr>
+
+          <tr class="cat-row"><td colspan="3">SEO &amp; Discoverability</td></tr>
+          <tr><td>SEO Foundation</td><td class="val-blue">Basic</td><td class="val-blue">Advanced</td></tr>
+          <tr><td>Google Business setup guidance</td><td class="val-no">—</td><td class="val-yes">✓</td></tr>
+          <tr><td>Advanced Local SEO Pack</td><td class="val-muted">Add-on $100</td><td class="val-muted">Add-on $100</td></tr>
+
+          <tr class="cat-row"><td colspan="3">Support</td></tr>
+          <tr><td>Revision rounds</td><td class="val-muted">1 round</td><td class="val-blue">2 rounds</td></tr>
+          <tr><td>1:1 direct with founder</td><td class="val-yes">✓</td><td class="val-yes">✓</td></tr>
+          <tr><td>Priority support</td><td class="val-no">—</td><td class="val-yes">✓</td></tr>
+
+          <tr class="cat-row"><td colspan="3">Optional Maintenance</td></tr>
+          <tr><td>Hosting, security &amp; monthly updates</td><td class="val-blue">$15 / mo</td><td class="val-blue">$30 / mo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ MAINTENANCE ════════════════════════════════ -->
+  <div class="maint-section">
+    <div class="compare-header">
+      <div class="section-tag" style="justify-content:center">Maintenance</div>
+      <h2 class="section-title reveal">Build once.<br>Stay sharp forever.</h2>
+      <p class="section-sub reveal" style="text-align:center;margin-inline:auto;">Your site is yours after launch — no recurring fees required. But if you want peace of mind, I've got you covered.</p>
+    </div>
+    <div class="maint-inner">
+
+      <!-- One-time -->
+      <div class="maint-card reveal">
+        <div class="maint-tag"><span class="tdot"></span> One-time build</div>
+        <div class="maint-title">Pay once. Own it forever.</div>
+        <p class="maint-desc">After launch you receive all source files. Host it anywhere, modify it anytime. No Wix. No Squarespace. No platform fees — ever.</p>
+        <div class="onetime-prices">
+          <div class="price-tier"><span class="tier-name">Personal Website</span><span class="tier-price">$85</span></div>
+          <div class="price-tier"><span class="tier-name">Small Business Website</span><span class="tier-price">$180</span></div>
+        </div>
+        <a href="contact.html" class="btn-plan outline">Start a project →</a>
+      </div>
+
+      <!-- Peace of Mind -->
+      <div class="maint-card peace reveal">
+        <div class="maint-tag"><span class="tdot"></span> Optional add-on</div>
+        <div class="maint-title">Peace of Mind.</div>
+        <p class="maint-desc">Hosting, security monitoring, and monthly content updates — handled. You run your business, I keep your site running at peak performance.</p>
+        <div class="peace-prices">
+          <div>
+            <div class="pp-label">Personal</div>
+            <div class="pp-row"><span class="pp-dollar">$</span><span class="pp-amount">15</span><span class="pp-freq">/mo</span></div>
+          </div>
+          <div>
+            <div class="pp-label">Small Business</div>
+            <div class="pp-row"><span class="pp-dollar">$</span><span class="pp-amount">30</span><span class="pp-freq">/mo</span></div>
+          </div>
+        </div>
+        <ul class="maint-list">
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Vercel Edge hosting managed for you</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Security monitoring &amp; uptime checks</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Monthly content &amp; copy updates</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Priority response within 24 hours</li>
+          <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Cancel anytime — no contracts</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ BOTTOM CTA ══════════════════════════════════ -->
+  <div class="cta-strip">
+    <div class="cta-inner reveal">
+      <h2>Ready to soar above the noise?</h2>
+      <p>Get a free quote today. I'll respond within 1 business day with a clear plan and honest price — no pressure, no commitment.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-primary">
+          Get a free quote
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+        <a href="services.html" class="btn-ghost">See what I build</a>
+      </div>
     </div>
   </div>
 
   <footer>
     <div class="footer-logo">Eagle Envision</div>
     <div class="footer-links">
+      <a href="build.html">Build</a>
       <a href="services.html">Services</a>
+      <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </div>
     <div class="footer-copy">© 2026 Eagle Envision Web Design · Roanoke, TX</div>
