@@ -138,6 +138,89 @@
   .hero-stats { justify-content: center; }
   .eagle-orbit-1, .eagle-orbit-2 { display: none; }
 }
+
+/* ─── SCROLL VIDEO ──────────────────────────────────────── */
+#video-scroll-section {
+  height: 400vh;
+  position: relative;
+}
+#video-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+#scrub-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+#video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    to bottom,
+    rgba(9,9,16,.55) 0%,
+    rgba(9,9,16,.3) 40%,
+    rgba(9,9,16,.55) 100%
+  );
+  backdrop-filter: blur(1px);
+}
+#video-overlay-inner {
+  text-align: center;
+  max-width: 720px;
+  padding: 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+#video-overlay-inner.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+#video-headline {
+  font-family: var(--font-head);
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--white);
+  margin-bottom: 1.2rem;
+  text-shadow: 0 2px 30px rgba(0,0,0,.6);
+}
+.vid-grad {
+  background: linear-gradient(120deg, #3B82F6, #93C5FD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#video-sub {
+  font-size: clamp(.95rem, 1.4vw, 1.1rem);
+  color: rgba(238,242,255,.75);
+  line-height: 1.8;
+  max-width: 520px;
+  margin: 0 auto;
+  text-shadow: 0 1px 12px rgba(0,0,0,.5);
+}
+#video-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(to right, #2563EB, #93C5FD);
+  z-index: 3;
+  transition: width .05s linear;
+  box-shadow: 0 0 8px rgba(59,130,246,.6);
+}
 </style>
 </head>
 <body>
@@ -243,6 +326,28 @@
     <div class="scroll-hint"><span>explore</span><div class="line"></div></div>
   </section>
 
+  <!-- ── SCROLL VIDEO SECTION ──────────────────────────── -->
+  <div id="video-scroll-section">
+    <div id="video-sticky">
+      <video
+        id="scrub-video"
+        src="explodingkeyboard.mp4"
+        muted
+        playsinline
+        preload="auto"
+      ></video>
+      <div id="video-overlay">
+        <div id="video-overlay-inner">
+          <div class="section-tag" style="justify-content:center; margin-bottom:1rem;">The Spark</div>
+          <h2 id="video-headline">Sometimes you just need<br>to <span class="vid-grad">blow it all up</span><br>and start fresh.</h2>
+          <p id="video-sub">That's what Eagle Envision does for your online presence — scraps the template, ignores the noise, and builds something worth remembering.</p>
+          <a href="contact.html" class="btn-primary" style="margin-top:1.8rem">Start fresh with me →</a>
+        </div>
+      </div>
+      <div id="video-progress-bar"></div>
+    </div>
+  </div>
+
   <footer>
     <div class="footer-logo">Eagle Envision</div>
     <div class="footer-links">
@@ -256,8 +361,7 @@
 </div>
 
 <script src="main.js"></script>
-<script src="chatbot.js"></script>
-  <script>
+<script>
 /* ─── TYPEWRITER ─────────────────────────────────────────── */
 const phrases = [
   'Hero Sections',
@@ -286,6 +390,62 @@ function type() {
   }
 }
 setTimeout(type, 1200);
+</script>
+
+<script>
+/* ─── VIDEO SCRUBBER ─────────────────────────────────────── */
+(function () {
+  const section  = document.getElementById('video-scroll-section');
+  const video    = document.getElementById('scrub-video');
+  const overlay  = document.getElementById('video-overlay-inner');
+  const bar      = document.getElementById('video-progress-bar');
+
+  if (!section || !video) return;
+
+  let duration = 0;
+  video.addEventListener('loadedmetadata', () => { duration = video.duration; });
+  // Force load
+  video.load();
+
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  });
+
+  function update() {
+    ticking = false;
+    if (!duration) return;
+
+    const rect      = section.getBoundingClientRect();
+    const sectionH  = section.offsetHeight;
+    const viewH     = window.innerHeight;
+
+    // progress 0→1 across the sticky scroll range
+    const scrolled  = -rect.top;
+    const scrollMax = sectionH - viewH;
+    const progress  = Math.min(Math.max(scrolled / scrollMax, 0), 1);
+
+    // Scrub video
+    const target = progress * duration;
+    if (Math.abs(video.currentTime - target) > 0.04) {
+      video.currentTime = target;
+    }
+
+    // Progress bar
+    bar.style.width = (progress * 100) + '%';
+
+    // Fade in overlay text once scrolling starts
+    if (progress > 0.05 && progress < 0.92) {
+      overlay.classList.add('visible');
+    } else {
+      overlay.classList.remove('visible');
+    }
+  }
+})();
 </script>
 </body>
 </html>
